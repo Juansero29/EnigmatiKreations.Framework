@@ -72,6 +72,10 @@
 
     <!-- This None is here so the conditionally included files show up in the Solution Explorer -->
     <None Include="**\*.cs;**\*.xml;**\*.axml;**\*.png" Exclude="obj\**\*.*;bin\**\*.*;bin;obj" />
+    <PackageReference Include="MinVer" Version="2.5.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
 
     <!--NuGet packages for all platforms-->
     <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />

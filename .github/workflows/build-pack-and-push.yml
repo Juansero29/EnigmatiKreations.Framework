@@ -6,19 +6,16 @@ name: Build, Pack & Push NuGets
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-
   build-pack-and-push:
-    
     # Set GitHub environement
     environment: packages
 
@@ -27,13 +24,12 @@ jobs:
 
     # Setup Runner Environement Variables
     env:
-      Solution_Name: EnigmatiKreations.Framework.sln                         
+      Solution_Name: EnigmatiKreations.Framework.sln
       Test_Project_Path: Tests\EnigmatiKreations.Framework.UnitTests\EnigmatiKreations.Framework.UnitTests.csproj
       PACKAGES_ACCESS_TOKEN: ${{ secrets.PACKAGES_ACCESS_TOKEN }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-     
       # Checkout the repo
       - name: Checkout
         uses: actions/checkout@v2
@@ -53,11 +49,11 @@ jobs:
       # Setup NuGet for use with actions
       - name: Setup NuGet restore
         uses: NuGet/setup-nuget@v1.0.5
-        
+
       # Restore Solution
       - name: Launch Nuget Restore
         run: nuget restore $env:Solution_Name
-      
+
       # Build Solution
       - name: Build packages for Release
         run: msbuild $env:Solution_Name -t:rebuild -p:Configuration=Release
@@ -65,19 +61,14 @@ jobs:
       # Pack All Projects Into Nugets
       - name: Pack NuGets
         run: msbuild $env:Solution_Name -t:pack -p:Configuration=Release
-        
-      # Push all created 
+
+      # Push all created
       - shell: pwsh
         name: Push NuGets
         run: |
-             dotnet nuget push .\EnigmatiKreations.Framework.ApiManager\bin\Release\*.nupkg --source "github" --api-key $env:PACKAGES_ACCESS_TOKEN
-             dotnet nuget push .\EnigmatiKreations.Framework.Controls\bin\Release\*.nupkg --source "github" --api-key $env:PACKAGES_ACCESS_TOKEN
-             dotnet nuget push .\EnigmatiKreations.Framework.Managers\bin\Release\*.nupkg --source "github" --api-key $env:PACKAGES_ACCESS_TOKEN
-             dotnet nuget push .\EnigmatiKreations.Framework.MVVM\bin\Release\*.nupkg --source "github" --api-key $env:PACKAGES_ACCESS_TOKEN
-             dotnet nuget push .\EnigmatiKreations.Framework.Persistence\bin\Release\*.nupkg --source "github" --api-key $env:PACKAGES_ACCESS_TOKEN
-             dotnet nuget push .\EnigmatiKreations.Framework.Utils\bin\Release\*.nupkg --source "github" --api-key $env:PACKAGES_ACCESS_TOKEN
-        
-        
-
-
-
+          dotnet nuget push .\EnigmatiKreations.Framework.ApiManager\bin\Release\*.nupkg --source "github" --api-key $env:PACKAGES_ACCESS_TOKEN
+          dotnet nuget push .\EnigmatiKreations.Framework.Controls\bin\Release\*.nupkg --source "github" --api-key $env:PACKAGES_ACCESS_TOKEN
+          dotnet nuget push .\EnigmatiKreations.Framework.Managers\bin\Release\*.nupkg --source "github" --api-key $env:PACKAGES_ACCESS_TOKEN
+          dotnet nuget push .\EnigmatiKreations.Framework.MVVM\bin\Release\*.nupkg --source "github" --api-key $env:PACKAGES_ACCESS_TOKEN
+          dotnet nuget push .\EnigmatiKreations.Framework.Persistence\bin\Release\*.nupkg --source "github" --api-key $env:PACKAGES_ACCESS_TOKEN
+          dotnet nuget push .\EnigmatiKreations.Framework.Utils\bin\Release\*.nupkg --source "github" --api-key $env:PACKAGES_ACCESS_TOKEN

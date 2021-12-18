@@ -14,7 +14,10 @@
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression></PackageLicenseExpression>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <RepositoryUrl>https://github.com/Juansero29/EnigmatiKreations.Framework</RepositoryUrl>
+    <RepositoryType>github</RepositoryType>
   </PropertyGroup>
+
 
   <ItemGroup>
     <None Include="..\LICENSE">

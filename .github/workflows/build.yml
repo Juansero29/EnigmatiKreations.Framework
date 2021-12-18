@@ -25,5 +25,10 @@ jobs:
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
 
+      - name: Print Files
+        shell: pwsh
+        run: ls
+
       - name: Build app for release
-        run: msbuild .\EnigmatiKreations.Framework.sln -t:rebuild -verbosity:diag -property:Configuration=Release
+        shell: pwsh
+        run: msbuild EnigmatiKreations.Framework.sln -t:rebuild -verbosity:diag -property:Configuration=Release

@@ -18,10 +18,14 @@ on:
 jobs:
 
   build-pack-and-push:
+    
+    # Set GitHub environement
+    environment: packages
+
     # The type of runner that the job will run on
     runs-on: windows-latest
 
-    # Setup Environement
+    # Setup Runner Environement Variables
     env:
       Solution_Name: EnigmatiKreations.Framework.sln                         
       Test_Project_Path: Tests\EnigmatiKreations.Framework.UnitTests\EnigmatiKreations.Framework.UnitTests.csproj
@@ -56,7 +60,7 @@ jobs:
       
       # Build Solution
       - name: Build packages for Release
-        run: msbuild $env:Solution_Name -t:rebuild -verbosity:diag -p:Configuration=Release
+        run: msbuild $env:Solution_Name -t:rebuild -p:Configuration=Release
 
       # Pack All Projects Into Nugets
       - name: Pack NuGets
@@ -69,9 +73,11 @@ jobs:
              dotnet nuget push .\EnigmatiKreations.Framework.ApiManager\bin\Release\*.nupkg --source "github" --api-key $env:PACKAGES_ACCESS_TOKEN
              dotnet nuget push .\EnigmatiKreations.Framework.Controls\bin\Release\*.nupkg --source "github" --api-key $env:PACKAGES_ACCESS_TOKEN
              dotnet nuget push .\EnigmatiKreations.Framework.Managers\bin\Release\*.nupkg --source "github" --api-key $env:PACKAGES_ACCESS_TOKEN
-             dotnet nuget push .\EnigmatiKreations.Framework.MVVM\bin\Release\*.nupkg --source "github" --api-key #env:PACKAGES_ACCESS_TOKEN
+             dotnet nuget push .\EnigmatiKreations.Framework.MVVM\bin\Release\*.nupkg --source "github" --api-key $env:PACKAGES_ACCESS_TOKEN
              dotnet nuget push .\EnigmatiKreations.Framework.Persistence\bin\Release\*.nupkg --source "github" --api-key $env:PACKAGES_ACCESS_TOKEN
              dotnet nuget push .\EnigmatiKreations.Framework.Utils\bin\Release\*.nupkg --source "github" --api-key $env:PACKAGES_ACCESS_TOKEN
         
         
+
+
 

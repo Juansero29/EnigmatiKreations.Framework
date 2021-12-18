@@ -56,4 +56,4 @@ jobs:
       
       # Build Solution
       - name: Build packages for Release
-        run: msbuild $env:Solution_Name -t:rebuild -verbosity:diag -p:Configuration=Release
+        run: msbuild $env:Solution_Name -t:rebuild -p:Configuration=Release

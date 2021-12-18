@@ -21,6 +21,7 @@ jobs:
     # The type of runner that the job will run on
     runs-on: windows-latest
 
+    # Setup Environement
     env:
       Solution_Name: EnigmatiKreations.Framework.sln                         
       Test_Project_Path: Tests\EnigmatiKreations.Framework.UnitTests\EnigmatiKreations.Framework.UnitTests.csproj
@@ -45,15 +46,22 @@ jobs:
         with:
           dotnet-version: 5.0.x
 
+      # Setup NuGet for use with actions
+      - name: Setup & Launch NuGet restore
+        uses: NuGet/setup-nuget@v1.0.5
+        run: nuget restore $env:Solution_Name
+
+      # Build Solution
       - name: Build packages for Release
         run: msbuild $env:Solution_Name -t:rebuild -verbosity:diag -p:Configuration=Release
-        
+
+      # Pack All Projects Into Nugets
       - name: Pack NuGets
         run: msbuild $env:Solution_Name -t:pack -p:Configuration=Release
         
+      # Push all created 
       - shell: pwsh
         name: Push NuGets
-
         run: |
              dotnet nuget push .\EnigmatiKreations.Framework.ApiManager\bin\Release\*.nupkg --source "github" --api-key "$env:PACKAGES_ACCESS_TOKEN"
              dotnet nuget push .\EnigmatiKreations.Framework.Controls\bin\Release\*.nupkg --source "github" --api-key "$env:PACKAGES_ACCESS_TOKEN"

@@ -66,12 +66,12 @@ jobs:
       - shell: pwsh
         name: Push NuGets
         run: |
-             dotnet nuget push .\EnigmatiKreations.Framework.ApiManager\bin\Release\*.nupkg --source "github" --api-key "$env:PACKAGES_ACCESS_TOKEN"
-             dotnet nuget push .\EnigmatiKreations.Framework.Controls\bin\Release\*.nupkg --source "github" --api-key "$env:PACKAGES_ACCESS_TOKEN"
-             dotnet nuget push .\EnigmatiKreations.Framework.Managers\bin\Release\*.nupkg --source "github" --api-key "$env:PACKAGES_ACCESS_TOKEN"
-             dotnet nuget push .\EnigmatiKreations.Framework.MVVM\bin\Release\*.nupkg --source "github" --api-key "$env:PACKAGES_ACCESS_TOKEN"
-             dotnet nuget push .\EnigmatiKreations.Framework.Persistence\bin\Release\*.nupkg --source "github" --api-key "$env:PACKAGES_ACCESS_TOKEN"
-             dotnet nuget push .\EnigmatiKreations.Framework.Utils\bin\Release\*.nupkg --source "github" --api-key "$env:PACKAGES_ACCESS_TOKEN"
+             dotnet nuget push .\EnigmatiKreations.Framework.ApiManager\bin\Release\*.nupkg --source "github" --api-key $env:PACKAGES_ACCESS_TOKEN
+             dotnet nuget push .\EnigmatiKreations.Framework.Controls\bin\Release\*.nupkg --source "github" --api-key $env:PACKAGES_ACCESS_TOKEN
+             dotnet nuget push .\EnigmatiKreations.Framework.Managers\bin\Release\*.nupkg --source "github" --api-key $env:PACKAGES_ACCESS_TOKEN
+             dotnet nuget push .\EnigmatiKreations.Framework.MVVM\bin\Release\*.nupkg --source "github" --api-key #env:PACKAGES_ACCESS_TOKEN
+             dotnet nuget push .\EnigmatiKreations.Framework.Persistence\bin\Release\*.nupkg --source "github" --api-key $env:PACKAGES_ACCESS_TOKEN
+             dotnet nuget push .\EnigmatiKreations.Framework.Utils\bin\Release\*.nupkg --source "github" --api-key $env:PACKAGES_ACCESS_TOKEN
         
         
 

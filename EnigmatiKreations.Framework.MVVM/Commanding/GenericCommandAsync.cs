@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Randomizer.Framework.Models.Contract;
 
 namespace Randomizer.Framework.ViewModels.Commanding
 {

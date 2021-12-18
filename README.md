@@ -1,5 +1,7 @@
 # EnigmatiKreations.Framework
 
+[![Build, Pack & Push NuGets](https://github.com/Juansero29/EnigmatiKreations.Framework/actions/workflows/build-pack-and-push.yml/badge.svg?branch=main)](https://github.com/Juansero29/EnigmatiKreations.Framework/actions/workflows/build-pack-and-push.yml)
+
 A base-framework for all my apps across the .NET environment
 
 ## References

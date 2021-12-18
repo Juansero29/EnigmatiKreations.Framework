@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Build
+name: Build, Pack & Push NuGets
 
 # Controls when the workflow will run
 on:
@@ -13,22 +13,38 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
+
+  build-pack-and-push:
     # The type of runner that the job will run on
     runs-on: windows-latest
 
+    env:
+      Solution_Name: EnigmatiKreations.Framework.sln                         
+      Test_Project_Path: Tests\EnigmatiKreations.Framework.UnitTests\EnigmatiKreations.Framework.UnitTests.csproj
+
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Add msbuild to PATH
+     
+      # Checkout the repo
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      # Install `msbuild` command
+      - name: Install MSBuild
         uses: microsoft/setup-msbuild@v1.1
 
-      - name: Print Files
-        shell: pwsh
-        run: ls
+      # Install `dotnet` command
+      - name: Install .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
 
-      - name: Build app for release
-        shell: pwsh
-        run: msbuild EnigmatiKreations.Framework.sln -t:rebuild -verbosity:diag -property:Configuration=Release
+      - name: Build packages for Release
+        run: msbuild $env:Solution_Name -t:rebuild -verbosity:diag -p:Configuration=Release
+        
+

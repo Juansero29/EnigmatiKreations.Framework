@@ -21,22 +21,39 @@ jobs:
     # The type of runner that the job will run on
     runs-on: windows-latest
 
+    env:
+      Solution_Name: EnigmatiKreations.Framework.sln                         
+      Test_Project_Path: Tests\EnigmatiKreations.Framework.UnitTests\EnigmatiKreations.Framework.UnitTests.csproj
+      PACKAGES_ACCESS_TOKEN: ${{ secrets.PACKAGES_ACCESS_TOKEN }}
+
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+     
+      # Checkout the repo
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
-      - name: Add msbuild to PATH
+      # Install `msbuild` command
+      - name: Install MSBuild
         uses: microsoft/setup-msbuild@v1.1
 
+      # Install `dotnet` command
+      - name: Install .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+
       - name: Build packages for Release
-        run: msbuild .\EnigmatiKreations.Framework.sln -t:rebuild -verbosity:diag -p:Configuration=Release
+        run: msbuild $env:Solution_Name -t:rebuild -verbosity:diag -p:Configuration=Release
         
       - name: Pack NuGets
-        run: msbuild .\EnigmatiKreations.Framework.sln -t:pack -p:Configuration=Release
+        run: msbuild $env:Solution_Name -t:pack -p:Configuration=Release
         
       - shell: pwsh
         name: Push NuGets
-        env: # Or as an environment variable
-          PACKAGES_ACCESS_TOKEN: ${{ secrets.PACKAGES_ACCESS_TOKEN }}
+
         run: |
              dotnet nuget push .\EnigmatiKreations.Framework.ApiManager\bin\Release\*.nupkg --source "github" --api-key "$env:PACKAGES_ACCESS_TOKEN"
              dotnet nuget push .\EnigmatiKreations.Framework.Controls\bin\Release\*.nupkg --source "github" --api-key "$env:PACKAGES_ACCESS_TOKEN"

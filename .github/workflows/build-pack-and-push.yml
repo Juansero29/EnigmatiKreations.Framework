@@ -47,10 +47,13 @@ jobs:
           dotnet-version: 5.0.x
 
       # Setup NuGet for use with actions
-      - name: Setup & Launch NuGet restore
+      - name: Setup NuGet restore
         uses: NuGet/setup-nuget@v1.0.5
+        
+      # Restore Solution
+      - name: Launch Nuget Restore
         run: nuget restore $env:Solution_Name
-
+      
       # Build Solution
       - name: Build packages for Release
         run: msbuild $env:Solution_Name -t:rebuild -verbosity:diag -p:Configuration=Release

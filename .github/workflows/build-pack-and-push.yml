@@ -57,6 +57,11 @@ jobs:
           # Source to scope the NuGet API Key to.
           nuget-api-key-source: https://nuget.pkg.github.com/Juansero29/index.json # optional
 
+      # Add custom nuget source with credentials
+      - shell: pwsh
+        name: Add Custom Nuget Source
+        run: dotnet nuget add source https://nuget.pkg.github.com/Juansero29/index.json -u Juansero29 -p $env:PACKAGES_ACCESS_TOKEN -n github
+      
       # Restore Solution
       - name: Launch Nuget Restore
         run: nuget restore $env:Solution_Name

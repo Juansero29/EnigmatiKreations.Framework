@@ -6,30 +6,27 @@ name: Build
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ develop ]
+    branches: [develop]
   pull_request:
-    branches: [ develop ]
+    branches: [develop]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-
-  build-pack-and-push:
+  build-only:
     # The type of runner that the job will run on
     runs-on: windows-latest
 
     # Setup Environement
     env:
-      Solution_Name: EnigmatiKreations.Framework.sln                         
+      Solution_Name: EnigmatiKreations.Framework.sln
       Test_Project_Path: Tests\EnigmatiKreations.Framework.UnitTests\EnigmatiKreations.Framework.UnitTests.csproj
       PACKAGES_ACCESS_TOKEN: ${{ secrets.PACKAGES_ACCESS_TOKEN }}
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-     
       # Checkout the repo
       - name: Checkout
         uses: actions/checkout@v2
@@ -48,12 +45,24 @@ jobs:
 
       # Setup NuGet for use with actions
       - name: Setup NuGet restore
-        uses: NuGet/setup-nuget@v1.0.5
-        
+        uses: NuGet/setup-nuget@v1.0.7
+        with:
+          # NuGet version to install. Can be `latest`, `preview`, a concrete version like `5.3.1`, or a semver range specifier like `5.x`.
+          nuget-version: latest # optional, default is latest
+          # NuGet API Key to configure.
+          nuget-api-key: $env:PACKAGES_ACCESS_TOKEN
+          # Source to scope the NuGet API Key to.
+          nuget-api-key-source: https://nuget.pkg.github.com/Juansero29/index.json # optional
+
+      # Add custom nuget source with credentials
+      - shell: pwsh
+        name: Update Custom Nuget Source Credentials
+        run: nuget sources update -Name "github" -username "Juansero29" -password "$env:PACKAGES_ACCESS_TOKEN"
+
       # Restore Solution
       - name: Launch Nuget Restore
         run: nuget restore $env:Solution_Name
-      
+
       # Build Solution
       - name: Build packages for Release
         run: msbuild $env:Solution_Name -t:rebuild -p:Configuration=Release

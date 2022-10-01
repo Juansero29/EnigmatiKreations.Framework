@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31727.386
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EnigmatiKreations.Framework.ApiManager", "EnigmatiKreations.Framework.ApiManager\EnigmatiKreations.Framework.ApiManager.csproj", "{D2E3F630-00FF-4534-AE09-8BBD6FB66DAF}"
 EndProject

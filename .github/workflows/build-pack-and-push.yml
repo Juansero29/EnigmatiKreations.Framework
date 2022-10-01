@@ -60,7 +60,7 @@ jobs:
       # Add custom nuget source with credentials
       - shell: pwsh
         name: Add Custom Nuget Source
-        run: dotnet nuget add source https://nuget.pkg.github.com/Juansero29/index.json -u Juansero29 -p $env:PACKAGES_ACCESS_TOKEN -n github
+        run: dotnet nuget update source https://nuget.pkg.github.com/Juansero29/index.json -u Juansero29 -p $env:PACKAGES_ACCESS_TOKEN -n github
       
       # Restore Solution
       - name: Launch Nuget Restore

@@ -45,7 +45,19 @@ jobs:
 
       # Setup NuGet for use with actions
       - name: Setup NuGet restore
-        uses: NuGet/setup-nuget@v1.0.5
+        uses: NuGet/setup-nuget@v1.0.7
+        with:
+          # NuGet version to install. Can be `latest`, `preview`, a concrete version like `5.3.1`, or a semver range specifier like `5.x`.
+          nuget-version: latest # optional, default is latest
+          # NuGet API Key to configure.
+          nuget-api-key: $env:PACKAGES_ACCESS_TOKEN
+          # Source to scope the NuGet API Key to.
+          nuget-api-key-source: https://nuget.pkg.github.com/Juansero29/index.json # optional
+
+      # Add custom nuget source with credentials
+      - shell: pwsh
+        name: Update Custom Nuget Source Credentials
+        run: nuget sources update -Name "github" -username "Juansero29" -password "$env:PACKAGES_ACCESS_TOKEN"
 
       # Restore Solution
       - name: Launch Nuget Restore

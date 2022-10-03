@@ -25,3 +25,6 @@ Created with the help of:
 - Run command `nuget sources`
 - Verify which source name you should update
 - Run command `nuget sources update -Name "SOURCE_NAME" -username "NEW_USERNAME" -password "NEW_PAT"`
+
+## Porting To MAUI
+https://devblogs.microsoft.com/xamarin/tips-for-porting-your-xamarin-library-to-dotnet-maui/
